@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alireza Ajami Bakhtiarvand — Music Resume / رزومه موسیقی</title>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/vazirmatn@latest/index.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/markazi-text@latest/index.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/gulzar@latest/index.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/playfair-display@latest/index.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/eb-garamond@latest/index.css">
+
+<style>
+  :root{
+    --paper:   #faf6ec;
+    --paper-2: #f4eddd;
+    --ink:     #241f1a;
+    --ink-soft:#4a4238;
+    --burgundy:#6d1f2c;
+    --gold:    #a3803c;
+    --gold-lt: #c9b077;
+    --staff:   #b9ad94;
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+
+  body{
+    background:
+      radial-gradient(1200px 600px at 50% -10%, #3b3229 0%, transparent 60%),
+      linear-gradient(180deg,#26211b 0%, #1c1813 100%);
+    min-height:100vh;
+    padding:96px 20px 80px;
+    font-family:'Vazirmatn','EB Garamond',serif;
+    color:var(--ink);
+  }
+
+  /* ============ TOOLBAR (screen only) ============ */
+  .toolbar{
+    position:fixed; inset:0 0 auto 0; z-index:50;
+    display:flex; gap:12px; align-items:center; justify-content:center;
+    padding:14px 16px;
+    background:rgba(20,16,12,.82);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(201,176,119,.25);
+  }
+  .toolbar .brand{
+    color:#e8dcc0; font-family:'Playfair Display',serif;
+    letter-spacing:.14em; font-size:12px; text-transform:uppercase;
+    margin-inline-end:auto; display:flex; align-items:center; gap:10px;
+  }
+  .toolbar .brand b{ color:var(--gold-lt); font-size:18px; font-family:'EB Garamond',serif;}
+  .btn{
+    font-family:'Vazirmatn',sans-serif; cursor:pointer;
+    border:1px solid var(--gold); color:#f1e6cb;
+    background:linear-gradient(180deg, rgba(163,128,60,.25), rgba(163,128,60,.08));
+    padding:9px 20px; border-radius:999px; font-size:13.5px;
+    transition:all .25s ease;
+  }
+  .btn:hover{ background:var(--gold); color:#1c1813; box-shadow:0 4px 18px rgba(163,128,60,.35); transform:translateY(-1px);}
+  .btn.primary{ background:var(--burgundy); border-color:#8a2a39;}
+  .btn.primary:hover{ background:#83283a; color:#fff;}
+
+  /* ============ STYLING GUIDE PANEL (screen only) ============ */
+  .guide{
+    max-width:880px; margin:0 auto 44px; display:none;
+    background:linear-gradient(180deg,#fbf7ee,#f3ecdc);
+    border:1px solid var(--gold-lt); border-radius:6px;
+    box-shadow:0 20px 60px rgba(0,0,0,.45);
+    padding:30px 34px; direction:ltr;
+    animation:rise .5s ease both;
+  }
+  .guide.open{ display:block; }
+  .guide h2{
+    font-family:'Playfair Display',serif; font-size:22px; color:var(--burgundy);
+    border-bottom:3px double var(--gold); padding-bottom:10px; margin-bottom:16px;
+  }
+  .guide .grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:14px 26px; }
+  .guide h3{ font-family:'Playfair Display',serif; font-size:14px; letter-spacing:.08em; text-transform:uppercase; color:var(--gold); margin-bottom:5px;}
+  .guide p{ font-family:'EB Garamond',serif; font-size:15px; line-height:1.55; color:var(--ink-soft);}
+  .swatches{ display:flex; gap:8px; margin-top:6px;}
+  .sw{ width:34px; height:22px; border-radius:3px; border:1px solid rgba(0,0,0,.15); position:relative;}
+  .sw span{ position:absolute; top:26px; left:-4px; font-size:9.5px; font-family:monospace; color:#6b6152; white-space:nowrap;}
+
+  /* ============ A4 SHEET ============ */
+  .sheet{
+    width:210mm; min-height:297mm; margin:0 auto 46px;
+    background:
+      linear-gradient(180deg, rgba(109,31,44,.028), transparent 18%),
+      var(--paper);
+    box-shadow:0 30px 80px rgba(0,0,0,.55);
+    padding:15mm 16mm;
+    position:relative;
+    animation:rise .7s ease both;
+  }
+  .sheet::before{ /* double classical frame */
+    content:""; position:absolute; inset:7mm;
+    border:1px solid var(--gold);
+    outline:1px solid var(--gold-lt); outline-offset:2.4px;
+    pointer-events:none;
+  }
+  @keyframes rise{ from{ opacity:0; transform:translateY(18px);} to{ opacity:1; transform:none;} }
+
+  .watermark{
+    position:absolute; top:10mm; inset-inline-end:12mm;
+    font-size:120px; line-height:1; color:var(--burgundy); opacity:.055;
+    pointer-events:none; user-select:none;
+  }
+
+  /* ---------- Section headings ---------- */
+  .sec-h{
+    display:flex; align-items:center; gap:12px;
+    margin:22px 0 12px;
+    color:var(--burgundy);
+  }
+  .sec-h .t{
+    font-family:'Markazi Text','Vazirmatn',serif;
+    font-size:23px; font-weight:700; white-space:nowrap;
+  }
+  .sheet.en .sec-h .t{ font-family:'Playfair Display',serif; font-size:18px; letter-spacing:.16em; text-transform:uppercase;}
+  .sec-h .rule{ flex:1; height:7px; background:center/contain repeat-x url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='42' height='7' viewBox='0 0 42 7'%3E%3Cpath d='M0 3.5h16M26 3.5h16' stroke='%23a3803c' stroke-width='1'/%3E%3Ccircle cx='21' cy='3.5' r='2.2' fill='%236d1f2c'/%3E%3C/svg%3E"); }
+
+  /* ---------- Header ---------- */
+  .head{ text-align:center; padding-bottom:14px; }
+  .name-fa{
+    font-family:'Gulzar','Markazi Text',serif;
+    font-size:44px; line-height:2.1; color:var(--ink);
+  }
+  .name-en{
+    font-family:'Playfair Display',serif; font-size:34px; letter-spacing:.12em;
+    color:var(--ink); line-height:1.25;
+  }
+  .role-line{
+    font-family:'Markazi Text',serif; font-size:18px; color:var(--burgundy); margin-top:2px;
+  }
+  .sheet.en .role-line{ font-family:'EB Garamond',serif; font-size:15px; letter-spacing:.22em; text-transform:uppercase; color:var(--gold);}
+  .contact{
+    display:flex; justify-content:center; flex-wrap:wrap; gap:8px 26px;
+    margin-top:10px; font-size:12.5px; color:var(--ink-soft);
+  }
+  .contact span{ direction:ltr; unicode-bidi:plaintext; }
+
+  .staff{
+    height:14px; margin:14px 4mm 2px;
+    background:repeating-linear-gradient(180deg, var(--staff) 0 1px, transparent 1px 4px);
+    position:relative; opacity:.8;
+  }
+  .staff::after{
+    content:"♪"; position:absolute; top:-9px; left:50%; transform:translateX(-50%);
+    background:var(--paper); padding:0 10px; color:var(--burgundy); font-size:16px;
+  }
+
+  /* ---------- Body ---------- */
+  .body-fa{ font-family:'Vazirmatn',sans-serif; font-size:12.2px; line-height:2.05; color:var(--ink); }
+  .body-en{ font-family:'EB Garamond',serif; font-size:14.5px; line-height:1.62; color:var(--ink); }
+  .about{ text-align:justify; }
+
+  .edu{ margin-top:2px; }
+  .edu .deg{ font-family:'Markazi Text',serif; font-size:17.5px; font-weight:700; color:var(--ink);}
+  .sheet.en .edu .deg{ font-family:'Playfair Display',serif; font-size:16px; }
+  .edu .uni{ font-size:12.5px; color:var(--ink-soft); }
+
+  ul.notes{ list-style:none; margin-top:6px; }
+  ul.notes li{
+    position:relative; padding-inline-start:22px; margin-bottom:7px;
+    break-inside:avoid;
+  }
+  ul.notes li::before{
+    content:"♪"; position:absolute; inset-inline-start:0; top:0;
+    color:var(--gold); font-size:14px;
+  }
+
+  /* teaching entries */
+  .job{ margin-bottom:12px; break-inside:avoid; }
+  .job .row1{ display:flex; justify-content:space-between; align-items:baseline; gap:14px;}
+  .job .place{ font-family:'Markazi Text',serif; font-size:16.5px; font-weight:700; color:var(--ink);}
+  .sheet.en .job .place{ font-family:'Playfair Display',serif; font-size:15px;}
+  .job .dates{
+    font-size:12px; color:var(--burgundy); border:1px solid var(--gold-lt);
+    padding:2px 12px; border-radius:999px; white-space:nowrap; background:rgba(163,128,60,.07);
+  }
+  .job .role{ font-size:12.3px; color:var(--ink-soft); margin-top:2px; }
+  .sheet.en .job .role{ font-style:italic; font-size:13.5px;}
+
+  .orch{
+    margin-inline-start:22px; margin-top:4px;
+    border-inline-start:2px solid var(--gold-lt); padding-inline-start:16px;
+  }
+  .orch div{ margin-bottom:4px; }
+
+  /* footer flourish */
+  .coda{
+    margin-top:auto; text-align:center; color:var(--gold);
+    font-size:15px; letter-spacing:8px; opacity:.85; padding-top:18px;
+  }
+  .sheet{ display:flex; flex-direction:column; }
+  .sheet > .grow{ flex:1; }
+
+  .page-tag{
+    position:absolute; bottom:9mm; inset-inline-end:16mm;
+    font-size:10px; letter-spacing:.2em; color:var(--staff);
+    font-family:'Playfair Display',serif; text-transform:uppercase;
+  }
+
+  /* ============ PRINT ============ */
+  @page{ size:A4; margin:0; }
+  @media print{
+    body{ background:#fff; padding:0; }
+    .toolbar, .guide{ display:none !important; }
+    .sheet{ box-shadow:none; margin:0; width:210mm; animation:none; page-break-after:always; }
+    .sheet:last-of-type{ page-break-after:auto; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- Toolbar -->
+  <nav class="toolbar">
+    <div class="brand"><b>𝄞</b> Classic Music Résumé — A4 Print Layout</div>
+    <button class="btn" id="guideBtn">📐 PDF Styling Guide</button>
+    <button class="btn primary" onclick="window.print()">⬇ Print / Save as PDF</button>
+  </nav>
+
+  <!-- Styling guidance (screen only) -->
+  <section class="guide" id="guide">
+    <h2>PDF Styling Guidance — Classic Music Theme</h2>
+    <div class="grid">
+      <div><h3>Page</h3><p>A4 (210 × 297 mm), margins 15–16 mm, thin double gold frame at 7 mm inset. One sheet per language; page break between Persian &amp; English.</p></div>
+      <div><h3>Fonts</h3><p>Persian: Gulzar (name, nastaliq display), Markazi Text (headings), Vazirmatn (body). English: Playfair Display (headings) + EB Garamond (body).</p></div>
+      <div><h3>Palette</h3><p>Ivory paper, warm ink, burgundy &amp; antique gold accents.
+        <span class="swatches">
+          <span class="sw" style="background:#faf6ec"><span>#FAF6EC</span></span>
+          <span class="sw" style="background:#241f1a"><span>#241F1A</span></span>
+          <span class="sw" style="background:#6d1f2c"><span>#6D1F2C</span></span>
+          <span class="sw" style="background:#a3803c"><span>#A3803C</span></span>
+        </span></p></div>
+      <div><h3>Headings</h3><p>Burgundy, 18–23 pt, with a thin gold staff-rule trailing each title. Never hyphenate names.</p></div>
+      <div><h3>Bullets</h3><p>Use an eighth-note ♪ marker in antique gold, 22 px hanging indent. Dates set in small burgundy pill badges.</p></div>
+      <div><h3>Spacing</h3><p>Persian body: 12.2 pt / line-height 2.05 (justified). English body: 14.5 pt / 1.62. 22 px before section headings, avoid breaking inside entries.</p></div>
+    </div>
+  </section>
+
+  <!-- ================= PAGE 1 : PERSIAN (exact text) ================= -->
+  <main class="sheet" dir="rtl" lang="fa">
+    <div class="watermark">♫</div>
+
+    <header class="head">
+      <div class="name-fa">علیرضا عجمی بختیاروند</div>
+      <div class="role-line">نوازنده پیانو | نوازنده آکاردئون | مدرس موسیقی | آهنگساز | پژوهشگر</div>
+      <div class="contact">
+        <span>📍 تهران، ایران</span>
+        <span>📞 09387564413</span>
+        <span>✉️ alireza.cj34@gmail.com</span>
+      </div>
+    </header>
+
+    <div class="staff"></div>
+
+    <div class="grow body-fa">
+
+      <h2 class="sec-h"><span class="t">درباره من</span><span class="rule"></span></h2>
+      <p class="about">نوازنده، مدرس، آهنگساز و پژوهشگر موسیقی با بیش از ده سال سابقه تدریس و فعالیت حرفه‌ای در حوزه پیانو و آکاردئون کلاسیک. فارغ‌التحصیل کارشناسی ارشد نوازندگی پیانو از دانشگاه آزاد اسلامی واحد تهران مرکز. در طول سال‌های فعالیت هنری، علاوه بر اجراهای صحنه‌ای و همکاری با ارکسترها و گروه‌های موسیقی، به پژوهش در زمینه آموزش آکاردئون کلاسیک باس استاندارد پرداخته و هم‌اکنون در حال تألیف متد آموزشی این ساز متناسب با نظام آموزش موسیقی ایران هستم.</p>
+
+      <h2 class="sec-h"><span class="t">تحصیلات</span><span class="rule"></span></h2>
+      <div class="edu">
+        <div class="deg">کارشناسی ارشد نوازندگی پیانو</div>
+        <div class="uni">دانشگاه آزاد اسلامی، واحد تهران مرکز</div>
+      </div>
+
+      <h2 class="sec-h"><span class="t">سوابق آموزشی</span><span class="rule"></span></h2>
+      <ul class="notes">
+        <li>آغاز فراگیری پیانو از سال ۱۳۸۲ نزد استاد حسن شیرانی.</li>
+        <li>ادامه آموزش پیانو نزد پرنیان احمدی‌نژاد و حامی کیوان.</li>
+        <li>بهره‌مندی از آموزش‌های تخصصی در دانشگاه نزد امیر ایوانی.</li>
+        <li>فراگیری هارمونی و مبانی نظری موسیقی نزد حسن قنبری و فرشاد شیخی.</li>
+      </ul>
+
+      <h2 class="sec-h"><span class="t">سوابق تدریس</span><span class="rule"></span></h2>
+      <div class="job">
+        <div class="row1"><span class="place">آموزشگاه موسیقی آهنگ – اصفهان</span><span class="dates">۱۳۹۴ تا ۱۴۰۲</span></div>
+        <div class="role">مدرس پیانو و آکاردئون</div>
+      </div>
+      <div class="job">
+        <div class="row1"><span class="place">آموزشگاه موسیقی نوای مهر – اصفهان</span><span class="dates">۱۳۹۴ تا ۱۴۰۲</span></div>
+        <div class="role">مدرس پیانو</div>
+      </div>
+      <div class="job">
+        <div class="row1"><span class="place">آموزشگاه موسیقی نیکاژنگ – تهران</span><span class="dates">از سال ۱۴۰۲ تاکنون</span></div>
+        <div class="role">مدرس پیانو</div>
+      </div>
+      <div class="job">
+        <div class="row1"><span class="place">آموزشگاه موسیقی فرکانس – تهران</span><span class="dates">از سال ۱۴۰۴ تاکنون</span></div>
+        <div class="role">مدرس پیانو و آکاردئون</div>
+      </div>
+
+      <h2 class="sec-h"><span class="t">پژوهش و تألیف</span><span class="rule"></span></h2>
+      <ul class="notes">
+        <li>آغاز فعالیت تخصصی در زمینه آکاردئون کلاسیک باس استاندارد از سال ۱۳۹۶.</li>
+        <li>پژوهش مستمر درباره شیوه‌های آموزش، رپرتوار و متدهای بین‌المللی آکاردئون کلاسیک باس استاندارد.</li>
+        <li>پژوهش در زمینه توسعه آموزش آکاردئون کلاسیک در ایران.</li>
+        <li>در حال تألیف متد آموزشی آکاردئون کلاسیک باس استاندارد متناسب با نظام آموزش موسیقی ایران.</li>
+      </ul>
+
+      <h2 class="sec-h"><span class="t">سوابق هنری و اجرایی</span><span class="rule"></span></h2>
+      <ul class="notes">
+        <li>اجرای رسیتال پیانو در تالار هنر اصفهان.</li>
+        <li>اجرای برنامه در آمفی‌تئاتر دانشگاه اصفهان.</li>
+        <li>اجرای برنامه در دانشگاه شهرکرد.</li>
+        <li>همکاری با گروه‌های پازیریک و خواب به عنوان پیانیست، آهنگساز و نوازنده آکاردئون.</li>
+        <li>حضور در رویدادهای TEDx و فستیوال‌های موسیقی در داخل و خارج از کشور.</li>
+        <li>همکاری در پروژه‌های مستقل موسیقی.</li>
+        <li>انتشار آلبوم «کلاژ» (۱۴۰۰)، شامل مجموعه‌ای از آثار برای پیانو، آکاردئون و سازهای زهی.</li>
+        <li>همکاری به عنوان سولیست پیانو و آکاردئون با:</li>
+      </ul>
+      <div class="orch">
+        <div>ارکستر وستا (رهبر: پویا ولی‌خانی)</div>
+        <div>ارکستر نقش جهان (رهبر: مهدی پناهی)</div>
+        <div>ارکستر سیلک (رهبر: رسول قپانی)</div>
+      </div>
+      <ul class="notes" style="margin-top:8px;">
+        <li>اجرای کنسرت‌ها و برنامه‌های متعدد در شهرهای اصفهان، تهران و رشت.</li>
+      </ul>
+    </div>
+
+    <div class="coda">♪ ♫ ♪</div>
+    <div class="page-tag">Page I — فارسی</div>
+  </main>
+
+  <!-- ================= PAGE 2 : ENGLISH ================= -->
+  <main class="sheet en" dir="ltr" lang="en">
+    <div class="watermark">♬</div>
+
+    <header class="head">
+      <div class="name-en">ALIREZA AJAMI BAKHTIARVAND</div>
+      <div class="role-line">Pianist · Accordionist · Music Instructor · Composer · Researcher</div>
+      <div class="contact">
+        <span>Tehran, Iran</span>
+        <span>09387564413</span>
+        <span>alireza.cj34@gmail.com</span>
+      </div>
+    </header>
+
+    <div class="staff"></div>
+
+    <div class="grow body-en">
+
+      <h2 class="sec-h"><span class="t">Summary</span><span class="rule"></span></h2>
+      <p class="about" style="text-align:justify;">Performer, instructor, composer, and music researcher with more than ten years of teaching and professional experience in classical piano and accordion. Holds an M.A. in Piano Performance from Islamic Azad University, Central Tehran Branch. Throughout years of artistic activity, in addition to stage performances and collaboration with orchestras and music ensembles, has pursued research on the pedagogy of classical standard-bass accordion and is currently authoring an instructional method book for the instrument, tailored to Iran&rsquo;s music education system.</p>
+
+      <h2 class="sec-h"><span class="t">Education</span><span class="rule"></span></h2>
+      <div class="edu">
+        <div class="deg">M.A. in Piano Performance</div>
+        <div class="uni">Islamic Azad University, Central Tehran Branch</div>
+      </div>
+
+      <h2 class="sec-h"><span class="t">Training</span><span class="rule"></span></h2>
+      <ul class="notes">
+        <li>Began piano studies in 1382 under Master Hassan Shirani.</li>
+        <li>Continued piano training with Parnian Ahmadinejad and Hami Keyvan.</li>
+        <li>Received specialized university-level instruction from Amir Ivani.</li>
+        <li>Studied harmony and music theory fundamentals with Hassan Ghanbari and Farshad Sheykhi.</li>
+      </ul>
+
+      <h2 class="sec-h"><span class="t">Teaching Experience</span><span class="rule"></span></h2>
+      <div class="job">
+        <div class="row1"><span class="place">Ahang Music Academy &ndash; Isfahan</span><span class="dates">1394 &ndash; 1402</span></div>
+        <div class="role">Piano &amp; Accordion Instructor</div>
+      </div>
+      <div class="job">
+        <div class="row1"><span class="place">Navaye Mehr Music Academy &ndash; Isfahan</span><span class="dates">1394 &ndash; 1402</span></div>
+        <div class="role">Piano Instructor</div>
+      </div>
+      <div class="job">
+        <div class="row1"><span class="place">Nikazhang Music Academy &ndash; Tehran</span><span class="dates">1402 &ndash; Present</span></div>
+        <div class="role">Piano Instructor</div>
+      </div>
+      <div class="job">
+        <div class="row1"><span class="place">Ferkans Music Academy &ndash; Tehran</span><span class="dates">1404 &ndash; Present</span></div>
+        <div class="role">Piano &amp; Accordion Instructor</div>
+      </div>
+
+      <h2 class="sec-h"><span class="t">Research &amp; Writing</span><span class="rule"></span></h2>
+      <ul class="notes">
+        <li>Began specialized work in classical standard-bass accordion in 1396.</li>
+        <li>Ongoing research on teaching approaches, repertoire, and international methods of classical standard-bass accordion.</li>
+        <li>Research on developing classical accordion education in Iran.</li>
+        <li>Currently authoring a method book for classical standard-bass accordion, tailored to Iran&rsquo;s music education system.</li>
+      </ul>
+
+      <h2 class="sec-h"><span class="t">Artistic &amp; Performance Experience</span><span class="rule"></span></h2>
+      <ul class="notes">
+        <li>Piano recital at Isfahan Art Hall (Talar-e Honar).</li>
+        <li>Performance at the University of Isfahan amphitheater.</li>
+        <li>Performance at Shahrekord University.</li>
+        <li>Collaboration with the Pazirik and Khab ensembles as pianist, composer, and accordionist.</li>
+        <li>Appearances at TEDx events and music festivals, domestically and abroad.</li>
+        <li>Collaboration on independent music projects.</li>
+        <li>Released the album &ldquo;Collage&rdquo; (Kolaj, 1400), a collection of works for piano, accordion, and strings.</li>
+        <li>Performed as piano and accordion soloist with:</li>
+      </ul>
+      <div class="orch">
+        <div>Vesta Orchestra (Conductor: Pooya Valikhani)</div>
+        <div>Naghsh-e Jahan Orchestra (Conductor: Mehdi Panahi)</div>
+        <div>Silk Orchestra (Conductor: Rasoul Ghabani)</div>
+      </div>
+      <ul class="notes" style="margin-top:8px;">
+        <li>Numerous concerts and performances across Isfahan, Tehran, and Rasht.</li>
+      </ul>
+
+      <h2 class="sec-h"><span class="t">Skills</span><span class="rule"></span></h2>
+      <ul class="notes">
+        <li>Piano Performance &nbsp;·&nbsp; Accordion Performance (Classical Standard Bass) &nbsp;·&nbsp; Music Teaching &nbsp;·&nbsp; Composition &nbsp;·&nbsp; Music Research &nbsp;·&nbsp; Harmony &amp; Music Theory &nbsp;·&nbsp; Method-Book Writing &nbsp;·&nbsp; Orchestral &amp; Ensemble Collaboration</li>
+      </ul>
+    </div>
+
+    <div class="coda">♪ ♫ ♪</div>
+    <div class="page-tag">Page II — English</div>
+  </main>
+
+<script>
+  document.getElementById('guideBtn').addEventListener('click', function(){
+    var g = document.getElementById('guide');
+    g.classList.toggle('open');
+    if (g.classList.contains('open')) g.scrollIntoView({behavior:'smooth', block:'start'});
+  });
+</script>
+</body>
+</html>
