@@ -33,12 +33,14 @@
     padding:96px 20px 80px;
     font-family:'Vazirmatn','EB Garamond',serif;
     color:var(--ink);
+    overflow-x:hidden;
+    -webkit-text-size-adjust:100%;
   }
 
   /* ============ TOOLBAR (screen only) ============ */
   .toolbar{
     position:fixed; inset:0 0 auto 0; z-index:50;
-    display:flex; gap:12px; align-items:center; justify-content:center;
+    display:flex; align-items:center; justify-content:space-between; gap:12px;
     padding:14px 16px;
     background:rgba(20,16,12,.82);
     backdrop-filter:blur(10px);
@@ -47,15 +49,52 @@
   .toolbar .brand{
     color:#e8dcc0; font-family:'Playfair Display',serif;
     letter-spacing:.14em; font-size:12px; text-transform:uppercase;
-    margin-inline-end:auto; display:flex; align-items:center; gap:10px;
+    display:flex; align-items:center; gap:10px;
+    min-width:0;
   }
-  .toolbar .brand b{ color:var(--gold-lt); font-size:18px; font-family:'EB Garamond',serif;}
+  .toolbar .brand b{ color:var(--gold-lt); font-size:18px; font-family:'EB Garamond',serif; flex:none;}
+  .toolbar .brand span{ white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .toolbar .brand .short{ display:none; }
+
+  /* hamburger */
+  .hamburger{
+    flex:none; display:flex; flex-direction:column; justify-content:center; gap:5px;
+    width:44px; height:40px; padding:0 10px;
+    background:linear-gradient(180deg, rgba(163,128,60,.25), rgba(163,128,60,.08));
+    border:1px solid var(--gold); border-radius:8px; cursor:pointer;
+    transition:background .25s ease, box-shadow .25s ease;
+  }
+  .hamburger:hover{ box-shadow:0 4px 18px rgba(163,128,60,.35); }
+  .hamburger span{
+    display:block; width:100%; height:2px; border-radius:2px;
+    background:var(--gold-lt);
+    transition:transform .3s ease, opacity .3s ease;
+  }
+  .hamburger.open span:nth-child(1){ transform:translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2){ opacity:0; }
+  .hamburger.open span:nth-child(3){ transform:translateY(-7px) rotate(-45deg); }
+
+  /* dropdown menu */
+  .menu{
+    position:absolute; top:calc(100% + 10px); inset-inline-end:16px;
+    display:flex; flex-direction:column; gap:10px;
+    min-width:250px; padding:14px;
+    background:rgba(20,16,12,.96);
+    border:1px solid rgba(201,176,119,.35); border-radius:12px;
+    box-shadow:0 24px 60px rgba(0,0,0,.55);
+    opacity:0; visibility:hidden; transform:translateY(-10px);
+    transition:opacity .3s ease, transform .3s ease, visibility .3s;
+    z-index:60;
+  }
+  .menu.open{ opacity:1; visibility:visible; transform:none; }
+
   .btn{
     font-family:'Vazirmatn',sans-serif; cursor:pointer;
     border:1px solid var(--gold); color:#f1e6cb;
     background:linear-gradient(180deg, rgba(163,128,60,.25), rgba(163,128,60,.08));
     padding:9px 20px; border-radius:999px; font-size:13.5px;
     transition:all .25s ease;
+    text-align:center;
   }
   .btn:hover{ background:var(--gold); color:#1c1813; box-shadow:0 4px 18px rgba(163,128,60,.35); transform:translateY(-1px);}
   .btn.primary{ background:var(--burgundy); border-color:#8a2a39;}
@@ -83,8 +122,12 @@
   .sw span{ position:absolute; top:26px; left:-4px; font-size:9.5px; font-family:monospace; color:#6b6152; white-space:nowrap;}
 
   /* ============ A4 SHEET ============ */
+  .sheet-wrap{
+    width:100%; display:flex; justify-content:center;
+    margin:0 auto 46px;
+  }
   .sheet{
-    width:210mm; min-height:297mm; margin:0 auto 46px;
+    width:210mm; min-height:297mm;
     background:
       linear-gradient(180deg, rgba(109,31,44,.028), transparent 18%),
       var(--paper);
@@ -92,6 +135,7 @@
     padding:15mm 16mm;
     position:relative;
     animation:rise .7s ease both;
+    flex:none;
   }
   .sheet::before{ /* double classical frame */
     content:""; position:absolute; inset:7mm;
@@ -202,23 +246,115 @@
     font-family:'Playfair Display',serif; text-transform:uppercase;
   }
 
-  /* ============ PRINT ============ */
+  /* ============ RESPONSIVE — TABLET / SMALL LAPTOP ============ */
+  @media (max-width: 900px){
+    body{ padding:84px 12px 60px; }
+    .toolbar{ padding:12px 12px; }
+    .toolbar .brand{ font-size:11px; letter-spacing:.1em; gap:8px; }
+    .guide{ padding:24px 22px; }
+  }
+
+  /* ============ RESPONSIVE — MOBILE (fluid readable mode) ============ */
+  @media (max-width: 767px){
+    body{ padding:70px 8px 46px; }
+
+    .toolbar{ padding:10px 12px; gap:8px; }
+    .toolbar .brand{ font-size:10px; letter-spacing:.06em; gap:7px; }
+    .toolbar .brand b{ font-size:16px; }
+    .toolbar .brand .full{ display:none; }
+    .toolbar .brand .short{ display:inline; }
+    .hamburger{ width:42px; height:38px; }
+    .menu{ min-width:calc(100vw - 24px); inset-inline-end:12px; padding:12px; }
+    .btn{ padding:10px 18px; font-size:13px; }
+
+    .guide{ padding:20px 16px; margin-inline:2px; margin-bottom:30px; }
+    .guide h2{ font-size:18px; margin-bottom:14px; }
+    .guide .grid{ gap:16px 0; grid-template-columns:1fr; }
+    .guide p{ font-size:14px; }
+    .swatches{ margin-bottom:14px; }
+
+    .sheet-wrap{ margin-bottom:26px; }
+
+    .sheet{
+      width:100%; min-height:0;
+      padding:26px 18px 44px;
+      box-shadow:0 16px 40px rgba(0,0,0,.5);
+    }
+    .sheet::before{ inset:8px; outline-offset:2px; }
+
+    .watermark{ font-size:68px; top:14px; inset-inline-end:16px; }
+
+    .head{ padding-bottom:8px; }
+    .name-fa{ font-size:29px; line-height:2; }
+    .name-en{ font-size:22px; letter-spacing:.08em; }
+    .role-line{ font-size:15px; }
+    .sheet.en .role-line{ font-size:11px; letter-spacing:.13em; }
+    .contact{ gap:6px 14px; font-size:12px; margin-top:8px; }
+
+    .staff{ margin:12px 6px 2px; }
+
+    .sec-h{ margin:18px 0 9px; gap:8px; }
+    .sec-h .t{ font-size:19px; }
+    .sheet.en .sec-h .t{ font-size:14px; letter-spacing:.12em; }
+
+    .body-fa{ font-size:13.5px; line-height:2; }
+    .body-en{ font-size:15px; line-height:1.6; }
+
+    .edu .deg{ font-size:16px; }
+    .sheet.en .edu .deg{ font-size:15px; }
+    .edu .uni{ font-size:12.5px; }
+
+    ul.notes li{ padding-inline-start:20px; margin-bottom:8px; }
+    ul.notes li::before{ font-size:13px; }
+
+    .job{ margin-bottom:14px; }
+    .job .row1{ flex-wrap:wrap; gap:6px 10px; }
+    .job .place{ font-size:15.5px; }
+    .sheet.en .job .place{ font-size:14px; }
+    .job .dates{ font-size:11px; padding:2px 10px; }
+    .job .role{ font-size:12.5px; }
+    .sheet.en .job .role{ font-size:13px; }
+
+    .orch{ margin-inline-start:12px; padding-inline-start:12px; }
+
+    .coda{ letter-spacing:6px; font-size:13px; padding-top:14px; }
+    .page-tag{ bottom:10px; inset-inline-end:14px; font-size:8.5px; letter-spacing:.15em; }
+  }
+
+  /* ============ PRINT (exact A4, unchanged) ============ */
   @page{ size:A4; margin:0; }
   @media print{
-    body{ background:#fff; padding:0; }
-    .toolbar, .guide{ display:none !important; }
-    .sheet{ box-shadow:none; margin:0; width:210mm; animation:none; page-break-after:always; }
+    body{ background:#fff; padding:0; overflow:visible; }
+    .toolbar, .guide, .hamburger, .menu{ display:none !important; }
+    .sheet-wrap{ margin:0; height:auto !important; display:block; }
+    .sheet{
+      box-shadow:none; margin:0;
+      width:210mm !important; min-height:297mm !important;
+      padding:15mm 16mm !important;
+      animation:none; transform:none !important;
+      page-break-after:always;
+    }
     .sheet:last-of-type{ page-break-after:auto; }
+    .sheet::before{ inset:7mm !important; outline-offset:2.4px; }
   }
 </style>
 </head>
 <body>
 
-  <!-- Toolbar -->
+  <!-- Toolbar with hamburger menu -->
   <nav class="toolbar">
-    <div class="brand"><b>𝄞</b> Classic Music Résumé — A4 Print Layout</div>
-    <button class="btn" id="guideBtn">📐 PDF Styling Guide</button>
-    <button class="btn primary" onclick="window.print()">⬇ Print / Save as PDF</button>
+    <div class="brand">
+      <b>𝄞</b>
+      <span class="full">Classic Music Résumé — A4 Print Layout</span>
+      <span class="short">Classic Music Résumé</span>
+    </div>
+    <button class="hamburger" id="hamBtn" aria-label="Menu" aria-expanded="false" aria-controls="menu">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="menu" id="menu" role="menu">
+      <button class="btn" id="guideBtn" role="menuitem">📐 PDF Styling Guide</button>
+      <button class="btn primary" id="printBtn" role="menuitem">⬇ Print / Save as PDF</button>
+    </div>
   </nav>
 
   <!-- Styling guidance (screen only) -->
@@ -241,6 +377,7 @@
   </section>
 
   <!-- ================= PAGE 1 : PERSIAN (exact text) ================= -->
+  <div class="sheet-wrap">
   <main class="sheet" dir="rtl" lang="fa">
     <div class="watermark">♫</div>
 
@@ -325,8 +462,10 @@
     <div class="coda">♪ ♫ ♪</div>
     <div class="page-tag">Page I — فارسی</div>
   </main>
+  </div>
 
   <!-- ================= PAGE 2 : ENGLISH ================= -->
+  <div class="sheet-wrap">
   <main class="sheet en" dir="ltr" lang="en">
     <div class="watermark">♬</div>
 
@@ -416,13 +555,101 @@
     <div class="coda">♪ ♫ ♪</div>
     <div class="page-tag">Page II — English</div>
   </main>
+  </div>
 
 <script>
+  /* ---------- Hamburger menu ---------- */
+  var hamBtn = document.getElementById('hamBtn');
+  var menu   = document.getElementById('menu');
+
+  function toggleMenu(force){
+    var open = (typeof force === 'boolean') ? force : !menu.classList.contains('open');
+    menu.classList.toggle('open', open);
+    hamBtn.classList.toggle('open', open);
+    hamBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+
+  hamBtn.addEventListener('click', function(e){
+    e.stopPropagation();
+    toggleMenu();
+  });
+
+  document.addEventListener('click', function(e){
+    if (menu.classList.contains('open') && !menu.contains(e.target) && e.target !== hamBtn){
+      toggleMenu(false);
+    }
+  });
+
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape') toggleMenu(false);
+  });
+
+  /* ---------- Guide toggle ---------- */
   document.getElementById('guideBtn').addEventListener('click', function(){
+    toggleMenu(false);
     var g = document.getElementById('guide');
     g.classList.toggle('open');
-    if (g.classList.contains('open')) g.scrollIntoView({behavior:'smooth', block:'start'});
+    if (g.classList.contains('open')){
+      requestAnimationFrame(function(){
+        g.scrollIntoView({behavior:'smooth', block:'start'});
+        fitSheets();
+      });
+    }
   });
+
+  /* ---------- Print ---------- */
+  document.getElementById('printBtn').addEventListener('click', function(){
+    toggleMenu(false);
+    setTimeout(function(){ window.print(); }, 150);
+  });
+
+  /* ---------- Responsive A4 scaling (desktop/tablet only) ---------- */
+  function fitSheets(){
+    var wraps = document.querySelectorAll('.sheet-wrap');
+
+    /* Mobile: fluid mode — no scaling, CSS handles readable layout */
+    if (window.innerWidth <= 767){
+      wraps.forEach(function(w){
+        w.style.height = '';
+        w.querySelector('.sheet').style.transform = 'none';
+      });
+      return;
+    }
+
+    var gutter = 20;
+    var avail = Math.min(window.innerWidth, document.documentElement.clientWidth) - gutter;
+    wraps.forEach(function(w){
+      var s = w.querySelector('.sheet');
+      s.style.transform = 'none';
+      w.style.height = '';
+      var naturalW = s.offsetWidth;
+      var scale = Math.min(1, avail / naturalW);
+      if (scale < 1){
+        s.style.transformOrigin = 'top center';
+        s.style.transform = 'scale(' + scale + ')';
+        w.style.height = (s.offsetHeight * scale) + 'px';
+      }
+    });
+  }
+
+  var resizeTimer;
+  window.addEventListener('resize', function(){
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(fitSheets, 80);
+  });
+  window.addEventListener('load', fitSheets);
+  if (document.fonts && document.fonts.ready){
+    document.fonts.ready.then(function(){ requestAnimationFrame(fitSheets); });
+  }
+
+  /* Keep exact A4 output when printing */
+  window.addEventListener('beforeprint', function(){
+    document.querySelectorAll('.sheet-wrap').forEach(function(w){ w.style.height = ''; });
+    document.querySelectorAll('.sheet').forEach(function(s){ s.style.transform = 'none'; });
+  });
+  window.addEventListener('afterprint', fitSheets);
+
+  fitSheets();
 </script>
 </body>
 </html>
