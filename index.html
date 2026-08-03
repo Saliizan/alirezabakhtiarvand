@@ -232,6 +232,43 @@
   }
   .orch div{ margin-bottom:4px; }
 
+  /* ---------- PHOTO PLATES — original photos, unaltered ----------
+     Originals used AS-IS: no cropping, no filters, natural aspect ratio.
+     Mounted like classic prints: white mat + double gold frame.        */
+  figure.photo{
+    background:#fff;
+    border:1px solid var(--gold);
+    outline:1px solid var(--gold-lt); outline-offset:2px;
+    padding:4px;
+    box-shadow:0 6px 18px rgba(0,0,0,.18);
+    break-inside:avoid;
+    text-align:center;
+  }
+  figure.photo img{
+    display:block; width:100%; height:auto;   /* natural ratio — untouched */
+    background:#fff;
+  }
+  figure.photo figcaption{
+    font-family:'Markazi Text','Vazirmatn',serif;
+    font-size:12.5px; color:var(--ink-soft); padding-top:5px;
+  }
+  .sheet.en figure.photo figcaption{ font-family:'EB Garamond',serif; font-style:italic; font-size:12.5px; }
+
+  /* “About” two-column row: portrait column + text column (guaranteed
+     side-by-side on desktop — text can never fall below the photo).   */
+  .about-row{
+    display:grid;
+    grid-template-columns:40mm 1fr;   /* in RTL the photo sits at the reading start (right) */
+    gap:6mm;
+    align-items:start;
+  }
+  figure.photo.side{ width:100%; margin:0; }
+
+  /* Landscape plate centered at the end of a section */
+  figure.photo.plate{
+    width:118mm; margin:12px auto 4px;
+  }
+
   /* footer flourish */
   .coda{
     margin-top:auto; text-align:center; color:var(--gold);
@@ -317,6 +354,11 @@
 
     .orch{ margin-inline-start:12px; padding-inline-start:12px; }
 
+    /* photos on mobile: single column, centered — same look as before */
+    .about-row{ grid-template-columns:1fr; gap:12px; }
+    figure.photo.side{ width:70%; margin:0 auto; }
+    figure.photo.plate{ width:100%; margin:12px 0 4px; }
+
     .coda{ letter-spacing:6px; font-size:13px; padding-top:14px; }
     .page-tag{ bottom:10px; inset-inline-end:14px; font-size:8.5px; letter-spacing:.15em; }
   }
@@ -336,6 +378,8 @@
     }
     .sheet:last-of-type{ page-break-after:auto; }
     .sheet::before{ inset:7mm !important; outline-offset:2.4px; }
+    figure.photo{ box-shadow:none; }
+    .about-row{ grid-template-columns:40mm 1fr; gap:6mm; }
   }
 </style>
 </head>
@@ -371,8 +415,8 @@
           <span class="sw" style="background:#a3803c"><span>#A3803C</span></span>
         </span></p></div>
       <div><h3>Headings</h3><p>Burgundy, 18–23 pt, with a thin gold staff-rule trailing each title. Never hyphenate names.</p></div>
-      <div><h3>Bullets</h3><p>Use an eighth-note ♪ marker in antique gold, 22 px hanging indent. Dates set in small burgundy pill badges.</p></div>
-      <div><h3>Spacing</h3><p>Persian body: 12.2 pt / line-height 2.05 (justified). English body: 14.5 pt / 1.62. 22 px before section headings, avoid breaking inside entries.</p></div>
+      <div><h3>Bullets &amp; Photos</h3><p>Eighth-note ♪ marker in antique gold, 22 px hanging indent. Original photos used as-is (no crop / no filter), mounted on a white mat with a double gold frame; portrait 40 mm in a fixed column beside “About”, landscape plates 118 mm centered.</p></div>
+      <div><h3>Spacing</h3><p>Persian body: 12.2 pt / line-height 2.05 (justified). English body: 14.5 pt / 1.62. 22 px before section headings, avoid breaking inside entries &amp; figures.</p></div>
     </div>
   </section>
 
@@ -396,7 +440,13 @@
     <div class="grow body-fa">
 
       <h2 class="sec-h"><span class="t">درباره من</span><span class="rule"></span></h2>
-      <p class="about">نوازنده، مدرس، آهنگساز و پژوهشگر موسیقی با بیش از ده سال سابقه تدریس و فعالیت حرفه‌ای در حوزه پیانو و آکاردئون کلاسیک. فارغ‌التحصیل کارشناسی ارشد نوازندگی پیانو از دانشگاه آزاد اسلامی واحد تهران مرکز. در طول سال‌های فعالیت هنری، علاوه بر اجراهای صحنه‌ای و همکاری با ارکسترها و گروه‌های موسیقی، به پژوهش در زمینه آموزش آکاردئون کلاسیک باس استاندارد پرداخته و هم‌اکنون در حال تألیف متد آموزشی این ساز متناسب با نظام آموزش موسیقی ایران هستم.</p>
+      <div class="about-row">
+        <figure class="photo side">
+          <img src="./assets/image5.jpg" alt="پرتره با آکاردئون">
+          <figcaption>نوازنده آکاردئون</figcaption>
+        </figure>
+        <p class="about">نوازنده، مدرس، آهنگساز و پژوهشگر موسیقی با بیش از ده سال سابقه تدریس و فعالیت حرفه‌ای در حوزه پیانو و آکاردئون کلاسیک. فارغ‌التحصیل کارشناسی ارشد نوازندگی پیانو از دانشگاه آزاد اسلامی واحد تهران مرکز. در طول سال‌های فعالیت هنری، علاوه بر اجراهای صحنه‌ای و همکاری با ارکسترها و گروه‌های موسیقی، به پژوهش در زمینه آموزش آکاردئون کلاسیک باس استاندارد پرداخته و هم‌اکنون در حال تألیف متد آموزشی این ساز متناسب با نظام آموزش موسیقی ایران هستم.</p>
+      </div>
 
       <h2 class="sec-h"><span class="t">تحصیلات</span><span class="rule"></span></h2>
       <div class="edu">
@@ -426,7 +476,7 @@
         <div class="role">مدرس پیانو</div>
       </div>
       <div class="job">
-        <div class="row1"><span class="place">آموزشگاه موسیقی فرکانس – تهران</span><span class="dates">از سال ۱۴۰۴ تاکنون</span></div>
+        <div class="row1"><span class="place">آموزشگاه موسیقی فرکانس – تهران</span><span class="dates">از سال ۱۴۰ تاکنون</span></div>
         <div class="role">مدرس پیانو و آکاردئون</div>
       </div>
 
@@ -457,6 +507,11 @@
       <ul class="notes" style="margin-top:8px;">
         <li>اجرای کنسرت‌ها و برنامه‌های متعدد در شهرهای اصفهان، تهران و رشت.</li>
       </ul>
+
+      <figure class="photo plate">
+        <img src="./assets/image1.jpg" alt="اجرای سولیست آکاردئون به همراه ارکستر">
+        <figcaption>اجرای سولیست آکاردئون به همراه ارکستر</figcaption>
+      </figure>
     </div>
 
     <div class="coda">♪ ♫ ♪</div>
@@ -545,6 +600,11 @@
       <ul class="notes" style="margin-top:8px;">
         <li>Numerous concerts and performances across Isfahan, Tehran, and Rasht.</li>
       </ul>
+
+      <figure class="photo plate">
+        <img src="./assets/image7.jpg" alt="Piano recital — live performance">
+        <figcaption>Piano Recital &mdash; Live Performance</figcaption>
+      </figure>
 
       <h2 class="sec-h"><span class="t">Skills</span><span class="rule"></span></h2>
       <ul class="notes">
